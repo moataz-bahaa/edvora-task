@@ -1,25 +1,66 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import RidesContextProfider from './contexts/RidesContextProvider';
+import UserContextProvider from './contexts/UserContextProvider';
+import Home from './pages/Home';
+import { RideType, User } from './shared/types';
 
 function App() {
+  const [rides, setRides] = useState<RideType[]>([]);
+  const [user, setUser] = useState<User>({} as User);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRides = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('https://assessment.api.vweb.app/rides');
+        const data = await response.json();
+        setRides(data);
+      } catch (err: any) {
+        console.log(err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRides();
+  }, []);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('https://assessment.api.vweb.app/user');
+        const user = await response.json();
+        setUser(user);
+      } catch (err: any) {
+        console.log(err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>{error}</h1>;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RidesContextProfider value={rides}>
+      <UserContextProvider value={user}>
+        <Home />
+      </UserContextProvider>
+    </RidesContextProfider>
   );
 }
 

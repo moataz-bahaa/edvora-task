@@ -1,38 +1,213 @@
-.App {
+:root{
+  --color-dark: #292828;
+  --color-light: #ccc;
+  --color-more-darker: #000;
+  --color-darker: rgb(23,23,23);
+  --color-lighter: rgb(242,242,242);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--color-dark);
+}
+
+.container {
+  max-width: 1250px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+ul, li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.no-rides {
+  font-size: 30px;
+  color: var(--color-light);
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@keyframes pop-out {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.ride-card {
   display: flex;
-  flex-direction: column;
+  background-color: var(--color-darker);
+  color: var(--color-lighter);
+  padding: 20px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  animation: pop-out 0.5s ease-in-out;
+}
+
+.ride-card .ride-img {
+  flex: 0 0 auto;
+  width: 25%;
+}
+
+.ride-card .ride-img img {
+  width: 100%;
+  height: 170px;
+  border-radius: 6px;
+}
+
+.ride-card .ride-info {
+  padding-left: 50px;
+  flex: 0 0 auto;
+  width: 50%;
+}
+.ride-card .ride-info .ride-prop {
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+.ride-card .ride-info .prop-name {
+  color: var(--color-light);
+}
+
+.ride-card .ride-location {
+  display: flex;
+  flex: 0 0 auto;
+  width: 25%;
+  justify-content: flex-end;
+}
+
+.ride-card .ride-location div {
+  background-color: var(--color-more-darker);
+  color: var(--color-light);
+  width: 80px;
+  height: fit-content;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ride-card .ride-location div:not(:last-child) {
+  margin-right: 25px;
+}
+
+.navbar {
+  background-color: var(--color-more-darker);
+  color: var(--color-lighter);
+  width: 100%;
+  padding: 10px 0;
+}
+
+.navbar .navbar-content {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.navbar .navbar-title {
+  font-size: 40px;
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navbar .user {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .user .user-name {
+  font-size: 23px;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.navbar .user-img img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.header {
+  padding: 35px 0;
+}
+
+.header .header-content {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-light);
+}
+
+.header .header-content .ride-types {
+  display: flex;
+  font-size: 22px;
+}
+.header .header-content .ride-types .filter-type{
+  cursor: pointer;
+}
+
+.header .header-content .ride-types > .filter-type:not(:last-child) {
+  margin-right: 35px;
+}
+
+.header .header-content .ride-types > .filter-type.active {
+  font-weight: bold;
+  color: var(--color-lighter);
+  position: relative;
+}
+
+.header .header-content .ride-types > .filter-type.active::after{
+  content: "";
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-lighter);
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+}
+
+.header .header-content .filter-by-city-state .filter {
+  all: unset;
+  cursor: pointer;
+}
+
+.header .header-content .filter-by-city-state .filter-icon {
+  width: 20px;
+  height: 2px;
+  background-color: var(--color-light);
+  display: inline-block;
+  margin-right: 5px;
+  position: relative;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.header .header-content .filter-by-city-state .filter-icon::after,
+.header .header-content .filter-by-city-state .filter-icon::before{
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: var(--color-light);
+  position: absolute;
+  left: 0;
+}
+
+.header .header-content .filter-by-city-state .filter-icon::after {
+  top: 5px;
+  width: 10px;
+}
+
+.header .header-content .filter-by-city-state .filter-icon::before{
+  top: 10px;
+  width: 5px;
 }
